@@ -4,6 +4,7 @@ import freechips.rocketchip.config.Config
 import freechips.rocketchip.devices.tilelink.BootROMParams
 import freechips.rocketchip.system.{DefaultConfig => RCDefaultConfig}
 import freechips.rocketchip.subsystem.RocketTilesKey
+import freechips.rocketchip.subsystem.MemoryBusKey
 
 class BaseSkeletonConfig extends Config((site, here, up) => {
   case BootROMParams => up(BootROMParams, site).copy(hang = 0x10000)
@@ -14,6 +15,7 @@ class BaseSkeletonConfig extends Config((site, here, up) => {
         core = x.core.copy(useVM = false)
       )
     }
+  case MemoryBusKey => up(MemoryBusKey, site).copy(beatBytes = 256/8, blockBytes = 256)
 })
 
 class DefaultConfig extends Config(new BaseSkeletonConfig ++ new RCDefaultConfig)
